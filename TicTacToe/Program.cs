@@ -16,29 +16,31 @@ namespace TicTacToe
         static int round = 0;
 
         static char playerRestart;
+        static bool playerSet = false;
+
+        static char[] players = new char[2];
         static void Main(string[] args)
         {
-            char currentPlayer;
-
-
-            
-
             // Game loop
             while (true)
             {
+                // Set the player that goes first
+                SetPlayers(playerSet);
+
                 // Show the board for each loop
                 DisplayBoard();
 
-                // Change the current player
-                currentPlayer = 'X';
+                // Display the current round
                 Console.WriteLine($"\nRound {++round}:");
-                PlayerTurn(currentPlayer);
+
+                // First player turn
+                PlayerTurn(players[0]);
 
                 // Check if the game is won
                 if (IsWon())
                 {
                     DisplayBoard();
-                    Console.WriteLine($"\nPlayer ({currentPlayer}) wins!");
+                    Console.WriteLine($"\nPlayer ({players[0]}) wins!");
 
                     // Ask to restart
                     Console.Write("Press R to play again, or any other key to exit. ");
@@ -80,14 +82,13 @@ namespace TicTacToe
 
 
                 // Repeat
-                currentPlayer = 'O';
                 Console.WriteLine($"\nRound {++round}:");
-                PlayerTurn(currentPlayer);
+                PlayerTurn(players[1]);
 
                 if (IsWon())
                 {
                     DisplayBoard();
-                    Console.WriteLine($"\nPlayer ({currentPlayer}) wins!");
+                    Console.WriteLine($"\nPlayer ({players[1]}) wins!");
 
                     Console.Write("Press R to play again, or any other key to exit. ");
                     playerRestart = Console.ReadKey().KeyChar;
@@ -314,6 +315,36 @@ namespace TicTacToe
             };
 
             round = 0;
+            playerSet = false;
+        }
+
+        // Set the order of players
+        static void SetPlayers(bool flag)
+        {
+            while (!flag)
+            {
+                Console.Write("\nWho goes first? X or O? ");
+                char first = Console.ReadKey().KeyChar;
+
+                if (char.ToLower(first) == 'x')
+                {
+                    players = new char[] { 'X', 'O' };
+                    playerSet = true;
+                    flag = true;
+                    continue;
+                }
+                else if (char.ToLower(first) == 'o')
+                {
+                    players = new char[] { 'O', 'X' };
+                    playerSet = true;
+                    flag = true;
+                    continue;
+                }
+                else
+                {
+                    Console.Write("\nNot a valid input, try again.\n");
+                }
+            }
         }
     }
 }
