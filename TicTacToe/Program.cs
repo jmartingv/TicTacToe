@@ -321,9 +321,10 @@ namespace TicTacToe
         // Set the order of players
         static void SetPlayers(bool flag)
         {
+            Console.Clear();
             while (!flag)
             {
-                Console.Write("\nWho goes first? X or O? ");
+                Console.Write("Who goes first? X or O? ");
                 char first = Console.ReadKey().KeyChar;
 
                 if (char.ToLower(first) == 'x')
@@ -342,7 +343,7 @@ namespace TicTacToe
                 }
                 else
                 {
-                    Console.Write("\nNot a valid input, try again.\n");
+                    Console.WriteLine("\nNot a valid input, try again.\n");
                 }
             }
         }
